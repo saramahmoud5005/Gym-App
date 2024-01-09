@@ -37,6 +37,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 fun GymsScreen(){
     //lazyColumn is like recyclerView but Column is like listView
     val vm:GymsViewModel = viewModel()
+
+    vm.getGyms()
+
     // remember for save state when recomposition occurred but rememberSaveable used to save data state when configuration change like rotate screen
 
     LazyColumn(){
