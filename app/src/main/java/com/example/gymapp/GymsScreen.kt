@@ -55,6 +55,7 @@ fun GymsScreen(){
             }
         }
     }
+
 //    Column(Modifier.verticalScroll(rememberScrollState())) {
 //        listOfGym.forEach {
 //            GymItem(it)

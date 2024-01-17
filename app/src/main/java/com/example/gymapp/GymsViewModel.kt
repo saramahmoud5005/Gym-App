@@ -8,6 +8,11 @@ import androidx.lifecycle.ViewModel
 import com.example.gymapp.Gym
 import com.example.gymapp.GymsApiService
 import com.example.gymapp.listOfGym
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,7 +25,9 @@ class GymsViewModel(
 
     var state by mutableStateOf(emptyList<Gym>())
     private var apiService:GymsApiService
-    private lateinit var gymCall: Call<List<Gym>>
+    var job = Job()
+    //lifeCycle and viewModel scope uses dispatchers.Main by default but global scope uses dispatchers.Default by default
+    var scope = CoroutineScope(context = job + Dispatchers.IO) //Custom scope dispatchers.IO because it is a network call
     companion object{
         const val FAV_IDS = "favouriteGymsIDs"
     }
@@ -34,19 +41,12 @@ class GymsViewModel(
         getGyms()
     }
     private fun getGyms(){
-        gymCall =apiService.getGyms()
-        gymCall.enqueue(object :Callback<List<Gym>>{
-            override fun onResponse(call: Call<List<Gym>>, response: Response<List<Gym>>) {
-                response.body()?.let {
-                    state = it.restoreSelectedGyms()
-                }
+        scope.launch {
+            val gyms = apiService.getGyms()
+            withContext(Dispatchers.Main){//updating UI
+                state = gyms.restoreSelectedGyms()
             }
-
-            override fun onFailure(call: Call<List<Gym>>, t: Throwable) {
-                t.printStackTrace()
-            }
-
-        })
+        }
     }
     fun toggleFavouriteState(id:Int){
         val gyms = state.toMutableList()
@@ -72,6 +72,6 @@ class GymsViewModel(
     }
     override fun onCleared() {
         super.onCleared()
-        gymCall.cancel()
+        job.cancel()
     }
 }
