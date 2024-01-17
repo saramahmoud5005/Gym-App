@@ -19,6 +19,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,7 +39,12 @@ fun GymsScreen(){
     //lazyColumn is like recyclerView but Column is like listView
     val vm:GymsViewModel = viewModel()
 
-    vm.getGyms()
+//    LaunchedEffect( //this prevent calling network request every recomposition of gymScreen and call request when launching only (first time or when configuration change
+//        key1 = "request_gyms_list",
+//        block = {
+//            vm.getGyms()
+//        }
+//    )
 
     // remember for save state when recomposition occurred but rememberSaveable used to save data state when configuration change like rotate screen
 
