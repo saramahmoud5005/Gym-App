@@ -36,13 +36,12 @@ class GymsViewModel(
     }
     private fun getGyms(){
         //lifeCycle and viewModel scope uses dispatchers.Main by default but global scope uses dispatchers.Default by default
-        viewModelScope.launch(Dispatchers.IO + errorHandler) {// errorHandler instead of try and catch
-            val gyms = apiService.getGyms()
-            withContext(Dispatchers.Main){//updating UI
-                state = gyms.restoreSelectedGyms()
-            }
+        viewModelScope.launch(errorHandler) {// errorHandler instead of try and catch
+            val gyms = getGymsInSpecificDispatechers()
+            state = gyms.restoreSelectedGyms()
         }
     }
+    private suspend fun getGymsInSpecificDispatechers() = withContext(Dispatchers.IO){ apiService.getGyms() } // this withContext can be removed because this retrofit interface call wrapping the network call with withContext behind(we don't see it)
     fun toggleFavouriteState(id:Int){
         val gyms = state.toMutableList()
         val itemIndex = gyms.indexOfFirst { it.id==id }
