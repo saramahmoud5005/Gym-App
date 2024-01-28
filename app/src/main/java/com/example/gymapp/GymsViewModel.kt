@@ -28,7 +28,7 @@ class GymsViewModel(
     init {
         val retrofit: Retrofit= Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https...")
+            .baseUrl("https://console.firebase.google.com/u/0/project/fcm-pushnotification-7a8f7/database/fcm-pushnotification-7a8f7-default-rtdb/data/")
             .build()
 
         apiService = retrofit.create(GymsApiService::class.java)

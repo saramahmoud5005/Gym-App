@@ -17,6 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             GymsScreen()
+
         }
     }
 }
@@ -36,3 +37,5 @@ fun GreetingPreview() {
         Greeting("Android")
     }
 }
+
+//https://www.google.com/search?q=how+to+show+part+of+web+page+on+webView+android&oq=how+to+show+part+of+web+page+on+webView+android&gs_lcrp=EgZjaHJvbWUyBggAEEUYOdIBCTIyNTU4ajBqN6gCALACAA&sourceid=chrome&ie=UTF-8#ip=1
