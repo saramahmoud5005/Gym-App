@@ -36,6 +36,7 @@ class GymsViewModel(
         apiService = retrofit.create(GymsApiService::class.java)
         getGyms()
     }
+
     private fun getGyms(){
         //lifeCycle and viewModel scope uses dispatchers.Main by default but global scope uses dispatchers.Default by default
         viewModelScope.launch(errorHandler) {// errorHandler instead of try and catch
