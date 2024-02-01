@@ -1,6 +1,7 @@
 package com.example.gymapp
 
 import GymsViewModel
+import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column

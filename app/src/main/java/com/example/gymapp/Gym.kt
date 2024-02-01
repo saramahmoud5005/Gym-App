@@ -1,5 +1,7 @@
 package com.example.gymapp
 
+import com.google.gson.annotations.SerializedName
+
 val listOfGym = listOf<Gym>(
     Gym(1,"name1","address1"),
     Gym(2,"name2","address2"),
@@ -14,4 +16,11 @@ val listOfGym = listOf<Gym>(
     Gym(11,"name3","address3"),
     Gym(12,"name4","address4"),
 )
-data class Gym(val id:Int, val name:String, val place:String, var isFavourite:Boolean = false)
+data class Gym(
+    val id:Int,
+    @SerializedName("gym_name")
+    val name:String,
+    @SerializedName("gym_location")
+    val place:String,
+    var isFavourite:Boolean = false
+)

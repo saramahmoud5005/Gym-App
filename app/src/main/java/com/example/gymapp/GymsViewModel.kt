@@ -1,3 +1,4 @@
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -12,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.math.log
 
 class GymsViewModel(
     private val stateHandle:SavedStateHandle
@@ -28,7 +30,7 @@ class GymsViewModel(
     init {
         val retrofit: Retrofit= Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("https://console.firebase.google.com/u/0/project/fcm-pushnotification-7a8f7/database/fcm-pushnotification-7a8f7-default-rtdb/data/")
+            .baseUrl("https://fcm-pushnotification-7a8f7-default-rtdb.firebaseio.com/")
             .build()
 
         apiService = retrofit.create(GymsApiService::class.java)
@@ -37,6 +39,7 @@ class GymsViewModel(
     private fun getGyms(){
         //lifeCycle and viewModel scope uses dispatchers.Main by default but global scope uses dispatchers.Default by default
         viewModelScope.launch(errorHandler) {// errorHandler instead of try and catch
+            Log.d("gyms", "getGyms: ")
             val gyms = getGymsInSpecificDispatchers()
             state = gyms.restoreSelectedGyms()
         }
