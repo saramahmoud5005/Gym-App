@@ -1,5 +1,8 @@
 package com.example.gymapp
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 //val listOfGym = listOf<Gym>(
@@ -16,10 +19,15 @@ import com.google.gson.annotations.SerializedName
 //    Gym(11,"name3","address3"),
 //    Gym(12,"name4","address4"),
 //)
+@Entity(tableName = "gyms")
 data class Gym(
+    @PrimaryKey
+    @ColumnInfo(name = "gym_id")
     val id:Int,
+    @ColumnInfo(name = "gym_name")
     @SerializedName("gym_name")
     val name:String,
+    @ColumnInfo(name = "gym_location")
     @SerializedName("gym_location")
     val place:String,
     @SerializedName("is_open")
