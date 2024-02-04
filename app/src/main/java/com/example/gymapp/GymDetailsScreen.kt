@@ -2,6 +2,7 @@ package com.example.gymapp
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Place
@@ -10,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,6 +21,7 @@ import com.example.gymapp.ui.theme.GymAppTheme
 fun GymDetailsScreen(){
     val viewModel:GymDetailsViewModel = viewModel()
     val item = viewModel.state.value
+//    val item =Gym(1,"gym name","gym address", true,true)
     item?.let {
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxSize().padding(16.dp)) {
             DefaultIcon(
@@ -27,7 +30,8 @@ fun GymDetailsScreen(){
             )
             GymDetails(
                 gym = item,
-                modifier = Modifier.padding(bottom = 32.dp),
+                modifier = Modifier.padding(bottom = 32.dp).fillMaxWidth(),
+                horizontalAlignment = TextAlign.Center
             )
             Text(
                 text = if(item.isOpen) "Gym is open" else "Gym is close",
@@ -36,7 +40,7 @@ fun GymDetailsScreen(){
         }
     }
 }
-@Preview
+@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun _GymDetailsScreenPreview(){
     GymAppTheme {

@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -85,22 +86,23 @@ fun DefaultIcon(icon:ImageVector, modifier: Modifier, onClick:()->Unit = {}) {
 }
 
 @Composable
-fun GymDetails(gym: Gym, modifier: Modifier, horizontalAlignment: Alignment.Horizontal = Alignment.Start) {
+fun GymDetails(gym: Gym, modifier: Modifier, horizontalAlignment: TextAlign = TextAlign.Start) {
+    
     Column(modifier = modifier) {
-        CompositionLocalProvider {
-            Text(
-                text = gym.name,
-                style = MaterialTheme.typography.headlineSmall,
-                color = Purple80,
-                textAlign = TextAlign.Center
-            )
-        }
+        Text(
+            text = gym.name,
+            style = MaterialTheme.typography.headlineSmall,
+            color = Purple80,
+            modifier= Modifier.fillMaxWidth(),
+            textAlign = horizontalAlignment
+        )
         CompositionLocalProvider(
             LocalContentColor provides LocalContentColor.current.copy(alpha = 0.4f)
             ) {
             Text(
                 text = gym.place,
-                textAlign = TextAlign.Center
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = horizontalAlignment
             )
         }
     }
