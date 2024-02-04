@@ -1,7 +1,6 @@
 package com.example.gymapp
 
 import GymsViewModel
-import android.text.Layout
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -20,15 +19,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.gymapp.ui.theme.GymAppTheme
@@ -36,36 +30,25 @@ import com.example.gymapp.ui.theme.Purple80
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun GymsScreen(){
-    //lazyColumn is like recyclerView but Column is like listView
+fun GymsScreen(onItemClick:(Int) ->Unit){
     val vm:GymsViewModel = viewModel()
-
-//    LaunchedEffect( //this prevent calling network request every recomposition of gymScreen and call request when launching only (first time or when configuration change
-//        key1 = "request_gyms_list",
-//        block = {
-//            vm.getGyms()
-//        }
-//    )
-
-    // remember for save state when recomposition occurred but rememberSaveable used to save data state when configuration change like rotate screen
 
     LazyColumn(){
         items(vm.state){ gym->
-            GymItem(gym){ gymId->
-                vm.toggleFavouriteState(gymId)
-            }
+            GymItem(
+                gym = gym,
+                onFavouriteIconClick = { vm.toggleFavouriteState(it) },
+                onItemClick ={ id ->
+                    onItemClick(id)
+                }
+            )
         }
     }
 
-//    Column(Modifier.verticalScroll(rememberScrollState())) {
-//        listOfGym.forEach {
-//            GymItem(it)
-//        }
-//    }
 }
 
 @Composable
-fun GymItem(gym: Gym, onClick: (Int) -> Unit) {
+fun GymItem(gym: Gym, onFavouriteIconClick: (Int) -> Unit, onItemClick:(Int) ->Unit) {
 
     val icon = if(gym.isFavourite){
         Icons.Filled.Favorite
@@ -73,12 +56,14 @@ fun GymItem(gym: Gym, onClick: (Int) -> Unit) {
         Icons.Filled.FavoriteBorder
     }
 
-    Card(elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), modifier = Modifier.padding(8.dp)) {
+    Card(elevation = CardDefaults.cardElevation(defaultElevation = 4.dp), modifier = Modifier
+        .padding(8.dp)
+        .clickable { onItemClick(gym.id) }) {
         Row (verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(8.dp)){
             DefaultIcon(Icons.Filled.Place,Modifier.weight(0.15f))
-            GymDetails(gym,Modifier.weight(0.70f))
+            GymDetails(gym, Modifier.weight(0.70f))
             DefaultIcon(icon,Modifier.weight(0.15f)){
-                onClick(gym.id)
+                onFavouriteIconClick(gym.id)
             }
         }
     }
@@ -89,7 +74,7 @@ fun DefaultIcon(icon:ImageVector, modifier: Modifier, onClick:()->Unit = {}) {
     Image(
         imageVector = icon,
         contentDescription = "Favorite Icon",
-        Modifier
+        modifier = modifier
             .padding(8.dp)
             .clickable {
                 onClick()
@@ -100,23 +85,23 @@ fun DefaultIcon(icon:ImageVector, modifier: Modifier, onClick:()->Unit = {}) {
 }
 
 @Composable
-fun GymDetails(gym: Gym,modifier: Modifier) {
-    Column(modifier=modifier) {
-        Text(
-            text = gym.name,
-            style = MaterialTheme.typography.headlineSmall,
-            color = Purple80
-        )
-        CompositionLocalProvider(LocalContentColor provides LocalContentColor.current.copy(alpha = 0.4f)) {
-            Text(text = gym.place)
+fun GymDetails(gym: Gym, modifier: Modifier, horizontalAlignment: Alignment.Horizontal = Alignment.Start) {
+    Column(modifier = modifier) {
+        CompositionLocalProvider {
+            Text(
+                text = gym.name,
+                style = MaterialTheme.typography.headlineSmall,
+                color = Purple80,
+                textAlign = TextAlign.Center
+            )
         }
-    }
-}
-
-@Preview
-@Composable
-fun _GymScreenPreview(){
-    GymAppTheme {
-        GymsScreen()
+        CompositionLocalProvider(
+            LocalContentColor provides LocalContentColor.current.copy(alpha = 0.4f)
+            ) {
+            Text(
+                text = gym.place,
+                textAlign = TextAlign.Center
+            )
+        }
     }
 }

@@ -10,6 +10,6 @@ interface GymsApiService {
 
     @GET("gyms.json?orderBy=\"id\"")
     suspend fun getGym(
-        @Query("equalsTo") id: Int
+        @Query("equalTo") id: Int
     ):Map<String,Gym>
 }
