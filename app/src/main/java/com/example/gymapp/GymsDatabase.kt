@@ -22,14 +22,13 @@ abstract class GymsDatabase:RoomDatabase() {
                 GymsDatabase::class.java,
                 "gym_database",
             ).fallbackToDestructiveMigration().build()
-
-            fun getDaoInstance(context: Context):GymsDAO{
-                synchronized(this){
-                    if(daoInstance==null){
-                        daoInstance = buildDatabase(context).dao
-                    }
-                    return daoInstance as GymsDAO
+        }
+        fun getDaoInstance(context: Context):GymsDAO{
+            synchronized(this){
+                if(daoInstance==null){
+                    daoInstance = buildDatabase(context).dao
                 }
+                return daoInstance as GymsDAO
             }
         }
     }

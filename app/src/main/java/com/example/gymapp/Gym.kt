@@ -32,5 +32,6 @@ data class Gym(
     val place:String,
     @SerializedName("is_open")
     val isOpen:Boolean,
-    var isFavourite:Boolean = false
+    @ColumnInfo(name = "is_favourite")
+    val isFavourite:Boolean = false
     )
