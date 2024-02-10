@@ -14,5 +14,3 @@ jobs:
       - name: Run Lint
         run: ./gradlew lintDebug
 
-      - name: Make gradlew executable
-        run: git update-index --chmod=+x gradlew
