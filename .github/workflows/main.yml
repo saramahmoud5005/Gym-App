@@ -1,0 +1,14 @@
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CheckOut the code
+        uses: actions/checkout@v2
+
+      - name: Run lint
+        run: ./gradlew lintDebug
