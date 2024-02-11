@@ -5,7 +5,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  clean-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Open Script File
+        run: echo Open Script File
+
+      - name: open cleanup file
+        run: open cleanup.sh
+
   lint:
+    needs: [clean-cache]
     runs-on: ubuntu-latest
     steps:
       - name: CheckOut the code
