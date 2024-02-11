@@ -86,14 +86,39 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
 
+      - name: Run test
+        run: echo Run static code analysis
+
+#      - name: Set up JDK 17
+#        uses: actions/setup-java@v1
+#        with:
+#          java-version: 17
+#
+#      - name: SonarCloud Scan
+#        run: ./gradlew sonarqube -Dsonar.login=${{secrets.SONAR_TOKEN}}
+#        env:
+#          GITHUB_TOKEn: ${{ secrets.GITHUB_TOKEN}}
+
+
+  package:
+    needs: [static-code-analysis]
+    name: Generate APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
       - name: Set up JDK 17
         uses: actions/setup-java@v1
         with:
           java-version: 17
 
-      - name: SonarCloud Scan
-        run: ./gradlew sonarqube -Dsonar.login=${{secrets.SONAR_TOKEN}}
-        env:
-          GITHUB_TOKEn: ${{ secrets.GITHUB_TOKEN}}
+      - name: Build debug APK
+        run: ./gradlew assembleDebug --stacktrace
 
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: gym-app.apk
+          path: app/build/outputs/apk/debug/app-debug.apk
 
