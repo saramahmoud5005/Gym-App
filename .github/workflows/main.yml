@@ -15,7 +15,7 @@ jobs:
         run: echo Open Script File
 
       - name: open cleanup file
-        run: ./cleanup.sh
+        run: sh ./cleanup.sh
 
   lint:
     runs-on: ubuntu-latest
