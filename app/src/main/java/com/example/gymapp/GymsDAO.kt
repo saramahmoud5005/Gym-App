@@ -14,4 +14,8 @@ interface GymsDAO {
     suspend fun addGyms(gyms:List<Gym>)
     @Update(entity = Gym::class)
     suspend fun updateGym(gymFavouriteState: GymFavouriteState)
+    @Query("SELECT * FROM gyms WHERE is_favourite = 1")
+    suspend fun getFavouriteGyms(): List<Gym>
+    @Update(entity = Gym::class)
+    suspend fun updateGyms(gymFavouriteState: List<GymFavouriteState>)
 }
