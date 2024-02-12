@@ -18,6 +18,7 @@ jobs:
         run: sh ./cleanup.sh
 
   lint:
+    needs: [clean-cache]
     runs-on: ubuntu-latest
     steps:
       - name: CheckOut the code
