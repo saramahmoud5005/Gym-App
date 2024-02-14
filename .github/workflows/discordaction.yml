@@ -21,3 +21,4 @@ jobs:
           text: Notification of new push on github to Gym-App repo
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
+
