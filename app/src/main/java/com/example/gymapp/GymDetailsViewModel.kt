@@ -32,4 +32,5 @@ class GymDetailsViewModel(
         }
     }
     private suspend fun getGymFromRemoteDB(id:Int) = withContext(Dispatchers.IO){ apiService.getGym(id).values.first()}
+
 }
