@@ -15,11 +15,30 @@ jobs:
       - name: Send notification to discord channel
         run: echo Send notification to discord channel
 
-      - name: Discord Webhook Action
-        uses: tsickert/discord-webhook@v5.3.0
+      - name: Test Info
+        uses: rjstone/discord-webhook-notify@v1
         with:
-          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: "New push to Gym-App Repo"
+          severity: info
+          details: Test succeeded.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Warn
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: warn
+          details: Test warning.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Test Error
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          details: Test error.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
+#      - name: Discord Webhook Action
+#        uses: tsickert/discord-webhook@v5.3.0
+#        with:
+#          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+#          content: "New push to Gym-App Repo"
 
 #      - name: Discord notification
 #        env:
