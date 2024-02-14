@@ -1,25 +1,23 @@
-#https://discord.com/api/webhooks/1207263410069307412/EJTfgQBWxhMkTnvLHIBzpMl3Dm8a0BntT2W93Odoms1jAeSPqob1jerHpOZCOJ0Kx2dT/github
+name: discord-notify
 
-#name: discord-notify
-#
-#on:
-#  push:
-#    branches: [ master ]
-#  workflow_dispatch:
-#
-#jobs:
-#  send-message:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout the code
-#        uses: actions/checkout@v2
-#
-#      - name: Send notification to discord channel
-#        run: echo Send notification to discord channel
-#
-#      - name: Discord notification
-#        env:
-#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-#        uses: Ilshidur/action-discord@master
-#        with:
-#          args: 'New push to Gym-App Repo'
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: Send notification to discord channel
+        run: echo Send notification to discord channel
+
+      - name: Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        uses: Ilshidur/action-discord@master
+        with:
+          args: 'New push to Gym-App Repo'
