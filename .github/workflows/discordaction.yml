@@ -15,9 +15,15 @@ jobs:
       - name: Send notification to discord channel
         run: echo Send notification to discord channel
 
-      - name: Discord notification
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-        uses: Ilshidur/action-discord@master
+      - name: Discord Webhook Action
+        uses: tsickert/discord-webhook@v5.3.0
         with:
-          args: 'New push to Gym-App Repo'
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
+          content: "New push to Gym-App Repo"
+
+#      - name: Discord notification
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        uses: Ilshidur/action-discord@master
+#        with:
+#          args: 'New push to Gym-App Repo'
