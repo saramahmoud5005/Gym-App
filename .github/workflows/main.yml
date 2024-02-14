@@ -16,6 +16,22 @@ jobs:
 
       - name: open cleanup file
         run: sh ./cleanup.sh
+  increase-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v2
+
+      - name: github run number
+        run: echo ${{github.run_number}}
+
+
+#      - name: Bump version
+#        uses: Devofure/advance-android-version-actions@v1.4
+#        with:
+#          gradlePath: app/build.gradle # or app/build.gradle.kts
+#          versionCode: ${{github.run_number}}
+#          versionName: 1.0.0
 
   lint:
     needs: [clean-cache]
