@@ -16,3 +16,10 @@
 #
 #      - name: Send notification to discord channel
 #        run: echo Send notification to discord channel
+#
+#      - name: Discord notification
+#        env:
+#          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+#        uses: Ilshidur/action-discord@master
+#        with:
+#          args: 'New push to Gym-App Repo'
