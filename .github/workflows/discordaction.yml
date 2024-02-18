@@ -1,25 +1,25 @@
-name: discord-notify
-
-on:
-  push:
-    branches: [ master ]
-  workflow_dispatch:
-
-jobs:
-  send-message:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v2
-
-      - name: Test Custom
-        uses: rjstone/discord-webhook-notify@v1
-        with:
-          severity: info
-          details: Test succeeded.
-          color: '#ff00aa'
-          text: Notification of new push on github to Gym-App repo
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+#name: discord-notify
+#
+#on:
+#  push:
+#    branches: [ master ]
+#  workflow_dispatch:
+#
+#jobs:
+#  send-message:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout the code
+#        uses: actions/checkout@v2
+#
+#      - name: Test Custom
+#        uses: rjstone/discord-webhook-notify@v1
+#        with:
+#          severity: info
+#          details: Test succeeded.
+#          color: '#ff00aa'
+#          text: Notification of new push on github to Gym-App repo
+#          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
 
 
