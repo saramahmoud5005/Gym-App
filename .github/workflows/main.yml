@@ -23,7 +23,8 @@ jobs:
         uses: actions/checkout@v2
 
       - name: github run number
-        run: echo ${{github.run_number}}
+        run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
+#        run: echo ${{github.run_number}}
 
 
 #      - name: Bump version

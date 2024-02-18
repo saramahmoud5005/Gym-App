@@ -78,3 +78,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
 }
+task("printVersionInformation"){
+    println("v"+android.defaultConfig.versionName+"("+android.defaultConfig.versionCode+")")
+}
