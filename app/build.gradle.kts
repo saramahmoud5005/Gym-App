@@ -81,3 +81,11 @@ dependencies {
 task("printVersionInformation"){
     println("v"+android.defaultConfig.versionName+"("+android.defaultConfig.versionCode+")")
 }
+task("increaseVersionInformation"){
+    android.defaultConfig.versionCode?.plus(1)
+    var index = 1
+    if(android.defaultConfig.versionName?.get(1)?.toInt()==9) index.plus(2)
+    var versionName = android.defaultConfig.versionName?.get(index)?.toInt()
+    versionName?.plus(1)
+    android.defaultConfig.versionName = versionName.toString()
+}
