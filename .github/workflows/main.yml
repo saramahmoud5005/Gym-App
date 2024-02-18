@@ -16,11 +16,19 @@ jobs:
 
       - name: open cleanup file
         run: sh ./cleanup.sh
+
+
   increase-version:
+    needs: [clean-cache]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the code
         uses: actions/checkout@v2
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
 
       - name: github run number
         run: echo "VERSION_INFORMATION=$(${{github.workspace}}/gradlew -q printVersionInformation)" >> $GITHUB_ENV
