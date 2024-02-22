@@ -24,7 +24,7 @@ class GymsRepository {
         )
         gymsDAO.getGyms()
     }
-     suspend fun updateLocalDatabase(){
+     private suspend fun updateLocalDatabase(){
         val gyms = apiService.getGyms()
         val favouriteGymsList = gymsDAO.getFavouriteGyms()
         gymsDAO.addGyms(gyms)
@@ -32,13 +32,18 @@ class GymsRepository {
             favouriteGymsList.map{GymFavouriteState(id = it.id, true)}
         )
     }
-     suspend fun getGymsInSpecificDispatchers() = withContext(Dispatchers.IO){
+     suspend fun loadGyms() = withContext(Dispatchers.IO){
         try {
             updateLocalDatabase()
         }catch (e:Exception){
             if(gymsDAO.getGyms().isEmpty())
                 throw Exception("something went wrong")
         }
-        gymsDAO.getGyms()
+    }
+
+    suspend fun getGyms():List<Gym>{
+        return withContext(Dispatchers.IO){
+            return@withContext gymsDAO.getGyms()
+        }
     }
 }

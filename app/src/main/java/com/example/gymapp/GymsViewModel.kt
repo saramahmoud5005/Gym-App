@@ -5,9 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gymapp.domain.GetAllGymsUseCase
 import com.example.gymapp.Gym
-import com.example.gymapp.GymsRepository
 import com.example.gymapp.GymsScreenState
+import com.example.gymapp.domain.ToggleFavouriteStateUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
@@ -26,15 +27,15 @@ class GymsViewModel():ViewModel(){
             error = throwable.message
         )
     }
-    private val repo = GymsRepository()
+    private val getAllGymsUseCase = GetAllGymsUseCase()
+    private val toggleFavouriteStateUseCase = ToggleFavouriteStateUseCase()
     init {
-
         getGyms()
     }
 
     private fun getGyms(){
         viewModelScope.launch(errorHandler) {
-            val receivedGyms = repo.getGymsInSpecificDispatchers()
+            val receivedGyms = getAllGymsUseCase()
             _state = _state.copy(
                 gyms = receivedGyms,
                 isLoading = false
@@ -48,7 +49,7 @@ class GymsViewModel():ViewModel(){
 
         viewModelScope.launch {
             _state = _state.copy(
-                gyms = repo.toggleFavouriteGym(id, !gyms[itemIndex].isFavourite)
+                gyms = toggleFavouriteStateUseCase(id, gyms[itemIndex].isFavourite)
             )
         }
     }

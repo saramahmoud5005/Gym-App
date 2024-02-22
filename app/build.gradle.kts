@@ -1,3 +1,6 @@
+import com.android.build.gradle.internal.manifest.ManifestData
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -13,8 +16,8 @@ android {
         applicationId = "com.example.gymapp"
         minSdk = 26
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "1.0.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -40,6 +43,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -49,6 +53,55 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    task("increaseVersionInformation"){
+//        doLast {
+//            android.defaultConfig.versionCode = ant.project.getProperty("VERSION_CODE") as Int
+//            ant.project.setProperty(ant.project.getProperty("VERSION_CODE"), (ant.project.getProperty("VERSION_CODE") as Int?)?.plus(1).toString() )
+//        }
+        val currentVersionCode = defaultConfig.versionCode
+        if (currentVersionCode != null) {
+            defaultConfig.versionCode = currentVersionCode + 1
+        }
+
+
+
+        // Update the AndroidManifest.xml file with the new version code
+        val manifestFile = file("${projectDir}/src/main/AndroidManifest.xml")
+        if (manifestFile.exists()) {
+            val manifestContent = manifestFile.readText()
+            val updatedManifestContent = manifestContent.replace(
+                "android:versionCode=\"${currentVersionCode}\"",
+                "android:versionCode=\"${currentVersionCode?.plus(1)}\""
+            )
+            manifestFile.writeText(updatedManifestContent)
+        } else {
+            logger.error("AndroidManifest.xml not found.")
+        }
+
+//            android.defaultConfig.versionCode = android.defaultConfig.versionCode?.plus(1)
+//        doLast {
+//            applicationVariants.all { variant ->
+//                val versionCode = variant.mergedFlavor.versionCode?.plus(1)
+//                code = variant.versionCode.plus(1)
+//                android.defaultConfig.versionCode = variant.versionCode.plus(1)
+//                println("Version Code: $versionCode")
+//                true
+//            }
+//        }
+
+//            println("v "+android.defaultConfig.versionCode+"("+android.defaultConfig.versionName+")")
+
+
+//        var buildFile = file("build.gradle.kts")
+//        if(android.defaultConfig.versionCode==null) android.defaultConfig.versionCode = 1
+
+    //    var index = 1
+//    if(android.defaultConfig.versionName?.get(1)?.toInt()==9) index = index.plus(2)
+//    var versionName = android.defaultConfig.versionName?.get(index)?.toInt()
+//    versionName = versionName?.plus(1)
+//    android.defaultConfig.versionName = versionName.toString()
+    }
+
 }
 
 dependencies {
@@ -79,13 +132,9 @@ dependencies {
 
 }
 task("printVersionInformation"){
-    println("v"+android.defaultConfig.versionName+"("+android.defaultConfig.versionCode+")")
+
+    println("v"+android.defaultConfig.versionCode+"("+android.defaultConfig.versionName+")")
 }
-task("increaseVersionInformation"){
-    android.defaultConfig.versionCode?.plus(1)
-    var index = 1
-    if(android.defaultConfig.versionName?.get(1)?.toInt()==9) index.plus(2)
-    var versionName = android.defaultConfig.versionName?.get(index)?.toInt()
-    versionName?.plus(1)
-    android.defaultConfig.versionName = versionName.toString()
-}
+tasks.named("printVersionInformation") { dependsOn("increaseVersionInformation") }
+
+
