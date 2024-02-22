@@ -1,6 +1,5 @@
-package com.example.gymapp
+package com.example.gymapp.presentation.gymslist
 
-import GymsViewModel
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,10 +28,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.example.gymapp.ui.theme.Purple80
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.gymapp.Gym
 
 @Composable
 fun GymsScreen(onItemClick:(Int) ->Unit){
-    val vm:GymsViewModel = viewModel()
+    val vm: GymsViewModel = viewModel()
     val state = vm.state.value
     Box(
         contentAlignment = Alignment.Center,

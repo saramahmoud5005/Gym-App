@@ -1,9 +1,11 @@
-package com.example.gymapp
+package com.example.gymapp.presentation.gymdetails
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.gymapp.Gym
+import com.example.gymapp.data.remote.GymsApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

@@ -1,6 +1,6 @@
-package com.example.gymapp
+package com.example.gymapp.data.remote
 
-import retrofit2.Call
+import com.example.gymapp.Gym
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -11,5 +11,5 @@ interface GymsApiService {
     @GET("gyms.json?orderBy=\"id\"")
     suspend fun getGym(
         @Query("equalTo") id: Int
-    ):Map<String,Gym>
+    ):Map<String, Gym>
 }

@@ -1,5 +1,10 @@
-package com.example.gymapp
+package com.example.gymapp.data
 
+import com.example.gymapp.Gym
+import com.example.gymapp.GymApplication
+import com.example.gymapp.GymFavouriteState
+import com.example.gymapp.data.local.GymsDatabase
+import com.example.gymapp.data.remote.GymsApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
@@ -7,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class GymsRepository {
 
-    private val apiService:GymsApiService = Retrofit.Builder()
+    private val apiService: GymsApiService = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())
         .baseUrl("https://fcm-pushnotification-7a8f7-default-rtdb.firebaseio.com/")
         .build().create(GymsApiService::class.java)
@@ -29,7 +34,7 @@ class GymsRepository {
         val favouriteGymsList = gymsDAO.getFavouriteGyms()
         gymsDAO.addGyms(gyms)
         gymsDAO.updateGyms(
-            favouriteGymsList.map{GymFavouriteState(id = it.id, true)}
+            favouriteGymsList.map{ GymFavouriteState(id = it.id, true) }
         )
     }
      suspend fun loadGyms() = withContext(Dispatchers.IO){

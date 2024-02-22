@@ -1,10 +1,12 @@
-package com.example.gymapp
+package com.example.gymapp.data.local
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.gymapp.Gym
+import com.example.gymapp.GymFavouriteState
 
 @Dao
 interface GymsDAO {

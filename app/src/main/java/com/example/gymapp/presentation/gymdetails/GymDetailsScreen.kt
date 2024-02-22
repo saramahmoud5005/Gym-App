@@ -1,4 +1,4 @@
-package com.example.gymapp
+package com.example.gymapp.presentation.gymdetails
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,11 +15,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.gymapp.presentation.gymslist.DefaultIcon
+import com.example.gymapp.presentation.gymslist.GymDetails
 import com.example.gymapp.ui.theme.GymAppTheme
 
 @Composable
 fun GymDetailsScreen(){
-    val viewModel:GymDetailsViewModel = viewModel()
+    val viewModel: GymDetailsViewModel = viewModel()
     val item = viewModel.state.value
 //    val item =Gym(1,"gym name","gym address", true,true)
     item?.let {

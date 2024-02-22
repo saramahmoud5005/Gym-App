@@ -1,3 +1,5 @@
+package com.example.gymapp.presentation.gymslist
+
 import androidx.compose.runtime.State
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -7,17 +9,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gymapp.domain.GetAllGymsUseCase
 import com.example.gymapp.Gym
-import com.example.gymapp.GymsScreenState
 import com.example.gymapp.domain.ToggleFavouriteStateUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 class GymsViewModel():ViewModel(){
 
-    private var _state by mutableStateOf(GymsScreenState(
+    private var _state by mutableStateOf(
+        GymsScreenState(
         gyms = emptyList<Gym>(),
         isLoading = true,
-    ))
+    )
+    )
     val state: State<GymsScreenState>
         get() = derivedStateOf { _state }
     private val errorHandler = CoroutineExceptionHandler{ _,throwable->
