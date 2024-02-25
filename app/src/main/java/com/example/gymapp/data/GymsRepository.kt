@@ -3,22 +3,21 @@ package com.example.gymapp.data
 import com.example.gymapp.Gym
 import com.example.gymapp.GymApplication
 import com.example.gymapp.GymFavouriteState
+import com.example.gymapp.data.local.GymsDAO
 import com.example.gymapp.data.local.GymsDatabase
 import com.example.gymapp.data.remote.GymsApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
+import javax.inject.Singleton
 
-class GymsRepository {
-
-    private val apiService: GymsApiService = Retrofit.Builder()
-        .addConverterFactory(GsonConverterFactory.create())
-        .baseUrl("https://fcm-pushnotification-7a8f7-default-rtdb.firebaseio.com/")
-        .build().create(GymsApiService::class.java)
-
-    private var gymsDAO = GymsDatabase.getDaoInstance(GymApplication.getApplicationContext())
-
+@Singleton
+class GymsRepository @Inject constructor(
+    private val apiService: GymsApiService,
+    private val gymsDAO: GymsDAO,
+){
      suspend fun toggleFavouriteGym(gymId:Int, currentFavouriteState:Boolean) = withContext(
         Dispatchers.IO){
         gymsDAO.updateGym(

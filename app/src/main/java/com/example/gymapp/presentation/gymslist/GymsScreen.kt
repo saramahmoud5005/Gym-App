@@ -21,6 +21,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -31,9 +32,8 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.gymapp.Gym
 
 @Composable
-fun GymsScreen(onItemClick:(Int) ->Unit){
+fun GymsScreen(state: GymsScreenState, onItemClick:(Int) ->Unit){
     val vm: GymsViewModel = viewModel()
-    val state = vm.state.value
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier.fillMaxWidth()

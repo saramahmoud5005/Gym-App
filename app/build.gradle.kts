@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("org.sonarqube")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -122,6 +123,9 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     implementation("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.0")
     kapt("androidx.room:room-compiler:2.6.1")
+    implementation("com.google.dagger:hilt-android:2.44")
+    kapt("com.google.dagger:hilt-compiler:2.44")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -131,6 +135,10 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
 }
+kapt {
+    correctErrorTypes = true
+}
+
 task("printVersionInformation"){
 
     println("v"+android.defaultConfig.versionCode+"("+android.defaultConfig.versionName+")")

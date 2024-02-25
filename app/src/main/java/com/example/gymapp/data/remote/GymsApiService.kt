@@ -3,8 +3,9 @@ package com.example.gymapp.data.remote
 import com.example.gymapp.Gym
 import retrofit2.http.GET
 import retrofit2.http.Query
+import javax.inject.Inject
 
-interface GymsApiService {
+interface GymsApiService{
     @GET("gyms.json")
     suspend fun getGyms(): List<Gym>
 

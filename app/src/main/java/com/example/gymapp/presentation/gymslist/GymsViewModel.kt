@@ -10,10 +10,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.gymapp.domain.GetAllGymsUseCase
 import com.example.gymapp.Gym
 import com.example.gymapp.domain.ToggleFavouriteStateUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class GymsViewModel():ViewModel(){
+@HiltViewModel
+class GymsViewModel @Inject constructor(
+    private val getAllGymsUseCase : GetAllGymsUseCase,
+    private val toggleFavouriteStateUseCase : ToggleFavouriteStateUseCase,
+):ViewModel(){
 
     private var _state by mutableStateOf(
         GymsScreenState(
@@ -30,8 +36,7 @@ class GymsViewModel():ViewModel(){
             error = throwable.message
         )
     }
-    private val getAllGymsUseCase = GetAllGymsUseCase()
-    private val toggleFavouriteStateUseCase = ToggleFavouriteStateUseCase()
+
     init {
         getGyms()
     }

@@ -13,24 +13,4 @@ import com.example.gymapp.Gym
 )
 abstract class GymsDatabase:RoomDatabase() {
     abstract val dao: GymsDAO
-
-    companion object{
-
-        private var daoInstance: GymsDAO? = null
-        private fun buildDatabase(context: Context): GymsDatabase {
-            return Room.databaseBuilder(
-                context.applicationContext,
-                GymsDatabase::class.java,
-                "gym_database",
-            ).fallbackToDestructiveMigration().build()
-        }
-        fun getDaoInstance(context: Context): GymsDAO {
-            synchronized(this){
-                if(daoInstance ==null){
-                    daoInstance = buildDatabase(context).dao
-                }
-                return daoInstance as GymsDAO
-            }
-        }
-    }
 }

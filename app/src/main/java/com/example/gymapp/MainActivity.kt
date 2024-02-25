@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,7 +13,10 @@ import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.example.gymapp.presentation.gymdetails.GymDetailsScreen
 import com.example.gymapp.presentation.gymslist.GymsScreen
+import com.example.gymapp.presentation.gymslist.GymsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +32,13 @@ private fun GymsAroundApp(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "gyms"){
         composable(route = "gyms"){
-            GymsScreen{ id ->
-                navController.navigate("gyms/$id")
-            }
+            val vm : GymsViewModel = hiltViewModel()
+            GymsScreen(
+                state = vm.state.value,
+                onItemClick = { id ->
+                    navController.navigate("gyms/$id")
+                }
+            )
         }
         composable(route = "gyms/{gym_id}",
             arguments = listOf(
